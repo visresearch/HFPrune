@@ -4,11 +4,7 @@ This repository is the official implementation of the paper "HIGH-FIDELITY PRUNI
 
 ## Introduction
 
-Large Language Models (LLMs) have demonstrated exceptional performance but require significant computational resources for deployment. **HFPrune** addresses this through a novel pruning method using **information entropy** for importance evaluation, achieving superior performance compared to existing approaches.
-
-### Key Innovation
-
-Traditional pruning methods rely on one-hot cross-entropy loss, focusing only on single ground-truth tokens. **HFPrune** uses information entropy to evaluate neuron importance based on the **global prediction distribution**, preserving the model's full knowledge while requiring no teacher model.
+Large Language Models (LLMs) have demonstrated exceptional performance but require significant computational resources for deployment. **HFPrune** addresses this through a novel pruning method using **information entropy** for importance evaluation, achieving superior performance compared to existing approaches. Traditional pruning methods rely on one-hot cross-entropy loss, focusing only on single ground-truth tokens. **HFPrune** uses information entropy to evaluate neuron importance based on the **global prediction distribution**, preserving the model's full knowledge while requiring no teacher model.
 
 ### Highlights
 
@@ -149,32 +145,32 @@ lm_eval --model hf \
 
 ### Performance on LLaMA-2-7B
 
-We evaluated HFPrune on multiple zero-shot benchmarks and compared it against state-of-the-art structured pruning methods including **LLM-Pruner**, **LoRAPrune**, and **SDMPrune**.
+We evaluated HFPrune on multiple zero-shot benchmarks and compared it against state-of-the-art structured pruning methods including **LLM-Pruner**, **LoRAPrune**, **LoRAP**, and **SDMPrune**.
 
 **Key Result**: At a 20% pruning ratio, HFPrune's average score (59.0) **surpasses the original dense model** (58.3), demonstrating that our method not only preserves but can actually enhance model capabilities through better-targeted compression.
 
-| Pruning Ratio | Method | ARCC | ARCE | BoolQ | OBQA | PIQA | Wino | Average |
-|---------------|--------|------|------|-------|------|------|------|---------|
-| 0% | Llama-2-7B | 45.1 | 73.8 | 79.4 | 44.2 | 78.7 | 69.3 | **58.3** |
-| 20% | LLM-pruner | 40.4 | 70.1 | 80.2 | 38.8 | 75.8 | 64.3 | 56.1 |
-| 20% | LoRAPrune | 41.6 | 71.0 | 81.7 | 41.4 | 76.7 | 65.9 | 56.7 |
-| 20% | SDMPrune | 43.9 | 72.3 | 81.7 | 42.0 | 77.0 | 68.4 | 58.2 |
-| 20% | **HFPrune (Ours)** | **47.1** | **73.8** | **85.2** | **43.2** | **77.3** | **66.2** | **59.0** |
-| 30% | LLM-pruner | 38.0 | 64.8 | 75.6 | 36.4 | 73.4 | 62.9 | 53.9 |
-| 30% | LoRAPrune | 38.6 | 65.1 | 74.1 | 37.4 | 72.9 | 66.5 | 54.6 |
-| 30% | SDMPrune | 39.6 | 67.9 | 80.4 | 37.2 | 75.2 | 65.4 | 55.6 |
-| 30% | **HFPrune (Ours)** | **41.9** | **70.2** | **82.9** | **40.0** | **75.2** | **62.4** | **56.3** |
+| Pruning Ratio | Method | ARCC | ARCE | BoolQ | Crows | OBQA | PIQA | Race | SiQA | TfQA | Wino | Average |
+|---------------|--------|------|------|-------|-------|------|------|------|------|------|------|---------| 
+| 0% | Llama-2-7B | 45.1 | 73.8 | 79.4 | 67.4 | 44.2 | 78.7 | 40.1 | 46.5 | 38.8 | 69.3 | **58.3** |
+| 20% | LLM-pruner | 40.4 | 70.1 | 80.2 | 61.7 | 38.8 | 75.8 | 39.0 | 47.1 | 43.9 | 64.3 | 56.1 |
+| 20% | LoRAPrune | 41.6 | 71.0 | 81.7 | 58.7 | 41.4 | 76.7 | 40.4 | 44.0 | **65.9** | 65.9 | 56.7 |
+| 20% | LoRAP | 38.5 | 66.0 | 70.9 | -- | 39.6 | **78.1** | -- | -- | -- | 65.7 | -- |
+| 20% | SDMPrune | 43.9 | 72.3 | 81.7 | **62.1** | 42.0 | 77.0 | 41.3 | 48.5 | 44.9 | **68.4** | 58.2 |
+| 20% | **HFPrune (Ours)** | **47.1** | **73.8** | **85.2** | 60.2 | **43.2** | 77.3 | **43.3** | **49.5** | 44.7 | 66.2 | **59.0** |
+| 30% | LLM-pruner | 38.0 | 64.8 | 75.6 | **62.3** | 36.4 | 73.4 | 35.7 | 47.3 | 42.3 | 62.9 | 53.9 |
+| 30% | LoRAPrune | 38.6 | 65.1 | 74.1 | 61.4 | 37.4 | 72.9 | 39.0 | 46.3 | **44.8** | **66.5** | 54.6 |
+| 30% | LoRAP | 35.5 | 60.6 | 69.6 | -- | 37.8 | **76.7** | -- | -- | -- | 63.0 | -- |
+| 30% | SDMPrune | 39.6 | 67.9 | 80.4 | 58.5 | 37.2 | 75.2 | **40.0** | 47.8 | 43.7 | 65.4 | 55.6 |
+| 30% | **HFPrune (Ours)** | **41.9** | **70.2** | **82.9** | 58.1 | **40.0** | 75.2 | 39.5 | **48.8** | 44.2 | 62.4 | **56.3** |
 
 ## Model Weights
 
 We provide the model weights pruned by HFPrune for reproducibility and downstream use.
 
-| Model | Pruning Ratio | Download Link |
-|-------|---------------|---------------|
-| LLaMA-2-7B | 20% | [Coming Soon] |
-| LLaMA-2-7B | 30% | [Coming Soon] |
-| Qwen2.5-7B | 20% | [Coming Soon] |
-| Qwen2.5-7B | 30% | [Coming Soon] |
+| Model | Download Link |
+|-------|---------------|
+| LLaMA series | [🤗 HuggingFace](https://huggingface.co/visresearch/HFPrune-Llama-pruned) |
+| Qwen series | [🤗 HuggingFace](https://huggingface.co/visresearch/HFPrune-Qwen-pruned) |
 
 ## Citation
 
