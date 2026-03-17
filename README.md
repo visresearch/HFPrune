@@ -2,9 +2,13 @@
 
 This repository is the official implementation of the paper "HIGH-FIDELITY PRUNING FOR LARGE LANGUAGE MODELS".
 
+[[Paper](https://arxiv.org/abs/2603.08083)]    [[BibTex](#Citation)]   [[HuggingFace](https://huggingface.co/visresearch/HFPrune-Llama-pruned/tree/main)]
+
 ## Introduction
 
 Large Language Models (LLMs) have demonstrated exceptional performance but require significant computational resources for deployment. **HFPrune** addresses this through a novel pruning method using **information entropy** for importance evaluation, achieving superior performance compared to existing approaches. Traditional pruning methods rely on one-hot cross-entropy loss, focusing only on single ground-truth tokens. **HFPrune** uses information entropy to evaluate neuron importance based on the **global prediction distribution**, preserving the model's full knowledge while requiring no teacher model.
+
+![criterion](docs/criterion.png)
 
 ### Highlights
 
@@ -175,10 +179,10 @@ We provide the model weights pruned by HFPrune for reproducibility and downstrea
 ## Citation
 
 ```bibtex
-@article{hfprune2026,
-  title={HIGH-FIDELITY PRUNING FOR LARGE LANGUAGE MODELS},
-  author={},
-  journal={},
+@article{zhu2026high,
+  title={High-Fidelity Pruning for Large Language Models},
+  author={Zhu, Yijun and Wang, Jianxin and Shen, Chengchao},
+  journal={arXiv preprint arXiv:2603.08083},
   year={2026}
 }
 ```
